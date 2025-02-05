@@ -18,3 +18,14 @@ readableStream.push(null);
 readableStream.on("data", (chunk) => {
   console.log(chunk.toString());
 });
+
+// const stream = fs.createReadStream(`${__dirname}/file.txt`);
+
+// stream.resume();
+
+// cause lost data
+// setTimeout(() => {
+//   stream.on("data", (data) => {
+//     console.log(data);
+//   });
+// }, 2000);
