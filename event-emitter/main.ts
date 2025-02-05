@@ -1,4 +1,4 @@
-const EventEmitter = require("events");
+import EventEmitter from "events";
 
 // maximum call stack exceeded
 const eventEmitter = new EventEmitter();
