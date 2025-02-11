@@ -1,17 +1,22 @@
-import { spawn } from "child_process";
-import { createReadStream } from "fs";
+import { fork } from "child_process";
 
-const child = spawn("ls");
+factorial(20)
+  .then((result) => {
+    console.log("Result: ", result);
+  })
+  .catch(() => {
+    console.log("An error occured");
+  });
 
-child.stdout.on("data", (data) => {
-  console.log(data.toString());
-});
-
-const readableStream = createReadStream("./file.txt");
-const wc = spawn("wc", ["-c"]);
-
-readableStream.pipe(wc.stdin);
-
-wc.stdout.on("data", (data) => {
-  console.log(`Number of characters: ${data}`);
-});
+function factorial(n: number) {
+  return new Promise((resolve, reject) => {
+    const child = fork("./child.ts");
+    child.send(n);
+    child.on("message", (result: number) => {
+      resolve(result);
+    });
+    child.on("error", () => {
+      reject();
+    });
+  });
+}
